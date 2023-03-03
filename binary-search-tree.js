@@ -38,32 +38,132 @@ class BinarySearchTree {
   /** insertRecursively(val): insert a new node into the BST with value val.
    * Returns the tree. Uses recursion. */
 
-  insertRecursively(val) {}
+  insertRecursively(val, current = this.root) {
+    // If there is no element in the tree, the val is inserted in the root node.
+    if (this.root === null) {
+      this.root = new Node(val);
+      return this;
+    }
+
+    if (val < current.val) {
+      // If there is no left node
+      if (current.left === null) {
+        current.left = new Node(val);
+        return this;
+      }
+      // If there is left node, move to that node
+      else return insertRecursively(val, current.left);
+    } else if (val > current.val) {
+      // If there is no right node
+      if (current.right === null) {
+        current.right = new Node(val);
+        return this;
+      }
+      // If there is right node, move to that node
+      else return insertRecursively(val, current.right);
+    }
+  }
 
   /** find(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses iteration. */
 
-  find(val) {}
+  find(val) {
+    // If there is no element in the tree
+    if (!this.root) return undefined;
+
+    let current = this.root;
+    while (current) {
+      // If the value is found
+      if (val === current.val) return current;
+      // if the value is on left
+      else if (val < current.val) current = current.left;
+      // If value is on the right
+      else current = current.right;
+    }
+
+    return current;
+  }
 
   /** findRecursively(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses recursion. */
 
-  findRecursively(val) {}
+  findRecursively(val, current = this.root) {
+    // If there is no element in the tree
+    if (!this.root) return undefined;
+
+    // If the value is found
+    if (val === current.val) return current;
+    // if the value is on left
+    else if (val < current.val) {
+      if (current.left === null) return undefined;
+      return this.findRecursively(val, current.left);
+    }
+    // If value is on the right
+    else {
+      if (current.right === null) return undefined;
+      return this.findRecursively(val, current.right);
+    }
+  }
 
   /** dfsPreOrder(): Traverse the array using pre-order DFS.
    * Return an array of visited nodes. */
 
-  dfsPreOrder() {}
+  dfsPreOrder() {
+    result = []; // store node values in an array
+
+    current = this.root;
+
+    function traverse(node) {
+      result.push(node.val); // push node values in an array
+
+      if (node.left) return traverse(node.left); // If there is left node
+
+      if (node.right) return traverse(node.right); // If there is right node
+    }
+
+    traverse(current);
+    return result;
+  }
 
   /** dfsInOrder(): Traverse the array using in-order DFS.
    * Return an array of visited nodes. */
 
-  dfsInOrder() {}
+  dfsInOrder() {
+    result = []; // store node values in an array
+
+    current = this.root;
+
+    function traverse(node) {
+      if (node.left) return traverse(node.left); // If there is left node
+
+      result.push(node.val); // push node values in an array
+
+      if (node.right) return traverse(node.right); // If there is right node
+    }
+
+    traverse(current);
+    return result;
+  }
 
   /** dfsPostOrder(): Traverse the array using post-order DFS.
    * Return an array of visited nodes. */
 
-  dfsPostOrder() {}
+  dfsPostOrder() {
+    result = []; // store node values in an array
+
+    current = this.root;
+
+    function traverse(node) {
+      if (node.left) return traverse(node.left); // If there is left node
+
+      if (node.right) return traverse(node.right); // If there is right node
+
+      result.push(node.val); // push node values in an array
+    }
+
+    traverse(current);
+    return result;
+  }
 
   /** bfs(): Traverse the array using BFS.
    * Return an array of visited nodes. */
